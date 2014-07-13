@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+var downloader = require('../lib/wikipedia-revision-downloader'),
+    parser     = require('../lib/wikipedia-xml-parser'),
+    through    = require('through2'),
+    importer   = require('../lib/importer');
+
+var sourceWiki       = process.argv[2],
+    destinationIndex = process.argv[3];
+
+if (!sourceWiki || !destinationIndex) {
+    console.log('USAGE: import-wiki <source-wiki> <destination-index>');
+    process.exit(1);
+}
+
+var filter = through.obj(function (chunk, enc, cb) {
+    // we only want anonymous edits
+    if (chunk.contributor_ip) {
+        this.push(chunk);
+    }
+
+    cb();
+});
+
+downloader.fetch(sourceWiki)
+    .pipe(parser())
+    .pipe(filter)
+    .pipe(importer.import(destinationIndex))
+    .on('error', function (err) { throw err; })
+    .on('finish', function () {
+        console.log('finish');
+        process.exit(0); // not sure why this is necessary...
+    });
+
+
+
+
+
+
+

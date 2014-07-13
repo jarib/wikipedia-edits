@@ -1,0 +1,59 @@
+@charset "UTF-8";
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,600,700,900);
+
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 38rem) {
+  html {
+    font-size: 20px;
+  }
+}
+
+body {
+    padding-bottom: 100px;
+}
+
+a { color: #307EA9; }
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.container {
+  max-width: 38rem;
+  padding-left:  1rem;
+  padding-right: 1rem;
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+
+p {
+    margin: 0;
+    padding-bottom: 1em;
+}
+
+.muted {
+    color: #eee;
+}

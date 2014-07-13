@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+//
+// Takes line-delimited JSON on stdin, where each line should be an object with the following properties:
+//
+// * revision_id
+// * title
+// * contributor_ip
+// * timestamp
+//
+// Usage: cat data | import <destination-index>
+//
+
+var ldj      = require('ldjson-stream'),
+    importer = require('../lib/importer');
+
+var indexName = process.argv[2];
+if (!indexName) {
+    console.log("no index given");
+    process.exit(1);
+}
+
+process.stdin
+    .pipe(ldj.parse())
+    .pipe(importer.import(indexName))
+    .on('error', function (err) { throw err; })
+    .on('finish', function () {
+        console.log('finish');
+        process.exit(0); // not sure why this is necessary...
+    });
+
+
