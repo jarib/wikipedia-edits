@@ -27,10 +27,8 @@ downloader.fetch(sourceWiki)
     .pipe(filter)
     .pipe(importer.import(destinationIndex))
     .on('error', function (err) { throw err; })
-    .on('finish', function () {
-        console.log('finish');
-        process.exit(0); // not sure why this is necessary...
-    });
+    .on('end', function () { console.log('end'); })
+    .on('finish', function () { console.log('finish');  });
 
 
 
