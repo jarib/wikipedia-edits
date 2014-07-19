@@ -3,7 +3,12 @@
 var downloader = require('../lib/wikipedia-revision-downloader'),
     parser     = require('../lib/wikipedia-xml-parser'),
     through    = require('through2'),
-    importer   = require('../lib/importer');
+    importer   = require('../lib/importer'),
+    ldj        = require('ldjson-stream'),
+    csv        = require('csv-write-stream')(),
+    zlib       = require('zlib'),
+    fs         = require('fs');
+
 
 var sourceWiki       = process.argv[2],
     destinationIndex = process.argv[3];
@@ -14,8 +19,15 @@ if (!sourceWiki || !destinationIndex) {
 }
 
 var filter = through.obj(function (chunk, enc, cb) {
+    if (chunk.timestamp.length !== 20) {
+        // invalid timestamp, ignore
+        cb();
+        return;
+    }
+
     // we only want anonymous edits
     if (chunk.contributor_ip) {
+        delete chunk.contributor_username;
         this.push(chunk);
     }
 
@@ -25,7 +37,10 @@ var filter = through.obj(function (chunk, enc, cb) {
 downloader.fetch(sourceWiki)
     .pipe(parser())
     .pipe(filter)
-    .pipe(importer.import(destinationIndex))
+//    .pipe(importer.import(destinationIndex))
+    .pipe(csv)
+    .pipe(zlib.createGzip())
+    .pipe(fs.createWriteStream(destinationIndex + '.csv.gz'))
     .on('error', function (err) { throw err; })
     .on('end', function () { console.log('end'); })
     .on('finish', function () { console.log('finish');  });
