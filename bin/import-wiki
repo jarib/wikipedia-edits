@@ -19,12 +19,6 @@ if (!sourceWiki || !destinationIndex) {
 }
 
 var filter = through.obj(function (chunk, enc, cb) {
-    if (chunk.timestamp.length !== 20) {
-        // invalid timestamp, ignore
-        cb();
-        return;
-    }
-
     // we only want anonymous edits
     if (chunk.contributor_ip) {
         delete chunk.contributor_username;
