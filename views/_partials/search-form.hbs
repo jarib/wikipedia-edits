@@ -1,0 +1,23 @@
+  <form action="search">
+    <div>
+      Wikipedia:
+      <select name="wikipedia">
+        <option value="en">English</option>
+        <option value="no">Norwegian</option>
+      </select>
+    </div>
+
+    <div>
+        IP regexp:
+        <input type="text" name="regexp" value="{{query.regexp}}">
+    </div>
+
+    <div>
+      Title:
+      <input type="text" name="keyword" value="{{query.keyword}}">
+    </div>
+
+    <div>
+      <input type="submit" value="Search">
+    </div>
+  </form>

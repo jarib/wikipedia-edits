@@ -1,0 +1,29 @@
+<hr>
+
+Total hits: {{totalHits}}
+
+<table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+      <th>Source</th>
+      <th>IP</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#results}}
+      <tr>
+        <td>{{title}}</td>
+        <td>{{date}}</td>
+        <td>{{source}}</td>
+        <td>{{contributor_ip}}</td>
+        <td>
+          <a href="{{diff_url}}">Compare</a>
+        </td>
+      </tr>
+    {{/results}}
+  </tbody>
+</table>

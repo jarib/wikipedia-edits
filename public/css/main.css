@@ -57,3 +57,17 @@ p {
 .muted {
     color: #eee;
 }
+
+.error {
+    color: red;
+}
+
+td, th {
+    font-size: 0.8em;
+    text-align: left;
+    padding: 3px;
+}
+
+tr:hover {
+    background-color: #efefef;
+}
