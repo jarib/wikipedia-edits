@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+// given wikipedia xml dump data on stdin, writes csv to stdout
+
+var parser     = require('../lib/wikipedia-xml-parser'),
+    filter     = require('../lib/wikipedia-anomymous-filter'),
+    csv        = require('csv-write-stream');
+
+process.stdin
+    .pipe(parser())
+    .pipe(filter)
+    .pipe(csv())
+    .pipe(process.stdout)
+    .on('error', function (err) { throw err; })
+    .on('end', function () { console.error('end'); })
+    .on('finish', function () { console.error('finish'); });
+
+
+
+
