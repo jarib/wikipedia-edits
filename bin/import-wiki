@@ -25,6 +25,10 @@ var filter = through.obj(function (chunk, enc, cb) {
         this.push(chunk);
     }
 
+    if (isNaN(chunk.timestamp)) {
+        console.error("bad timestamp " + JSON.stringify(chunk));
+    }
+
     cb();
 });
 
