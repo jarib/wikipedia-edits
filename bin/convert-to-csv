@@ -3,7 +3,7 @@
 // given wikipedia xml dump data on stdin, writes csv to stdout
 
 var parser     = require('../lib/wikipedia-xml-parser'),
-    filter     = require('../lib/wikipedia-anomymous-filter'),
+    filter     = require('../lib/wikipedia-anonymous-filter'),
     csv        = require('csv-write-stream');
 
 process.stdin
